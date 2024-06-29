@@ -1,5 +1,5 @@
 import { generateTokenAndSetCookie } from '../lib/utils/generateToken.js'
-import User from '../models/user.model.js'
+import { User } from '../models/user.model.js'
 import bcrypt from 'bcryptjs'
 export const signup = async (req, res) => {
     try {
@@ -90,7 +90,7 @@ export const logout = async (req, res) => {
 export const getMe = async (req, res) => {
     try {
         const user = await User.findById(req.user._id).select("-password")
-        res.status(200).json(user)
+        res.status(200).json({ data: user })
     } catch (error) {
 
     }
