@@ -21,9 +21,9 @@ const Posts = () => {
             )}
             {!isLoading && POSTS && (
                 <div>
-                    {/* {POSTS.map((post) => (
+                    {POSTS.map((post) => (
                         <Post key={post._id} post={post} />
-                    ))} */}
+                    ))}
                 </div>
             )}
         </>

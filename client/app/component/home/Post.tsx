@@ -5,10 +5,9 @@ import { FaRegBookmark } from 'react-icons/fa'
 import { FaTrash } from 'react-icons/fa'
 import { useState } from 'react'
 import Link from 'next/link'
-import { POSTSTYPE } from 'model/dummy.model'
 
 type Props = {
-    post: POSTSTYPE
+    post?: any
 }
 
 const Post = ({ post }: Props) => {

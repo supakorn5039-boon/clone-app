@@ -4,7 +4,7 @@ import HomeIndex from 'app/component/home/Index'
 
 const Page = () => {
     return (
-        <div className="text-2xl text-red-500">
+        <div className="text-2xl">
             <HomeIndex />
         </div>
     )
