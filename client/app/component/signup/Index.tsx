@@ -1,5 +1,5 @@
 // SignUpIndex.tsx
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SignUpService } from 'service/SignUp.service'
 import { SubmitHandler } from 'react-hook-form'
 import XSvg from '../svgs/X'
@@ -11,14 +11,17 @@ import Link from 'next/link'
 import ToastAlert from '../toast/ToastAlert'
 import TextInput from '../UI/TextInput'
 import { SignUpProps } from 'model/SignUp.model'
+import { useRouter } from 'next/router'
 
 export default function SignUpIndex() {
     const { SignUpForm } = SignUpService()
+    const router = useRouter()
 
     const onSubmit: SubmitHandler<SignUpProps> = async (data) => {
         await new Promise((resolve) => setTimeout(resolve, 1500))
         ToastAlert('success', 'SignUp Successfully')
         SignUpForm.reset()
+        router.push('login')
         console.log(data)
     }
 
@@ -95,12 +98,12 @@ export default function SignUpIndex() {
                                 <span className="spinner mr-2"></span>
                             </>
                         ) : (
-                            'Sign Up'
+                            'Sign up'
                         )}
                     </button>
                 </form>
                 <div className="flex flex-col lg:w-2/3 gap-2 mt-4">
-                    <p className="text-white text-lg">
+                    <p className="text-white text-lg underline">
                         Already have an account?
                     </p>
                     <Link href="/login">
