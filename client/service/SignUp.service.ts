@@ -1,8 +1,12 @@
-import { SignUpDefaultValue, signUpResolver } from '../model/SignUp.model'
+import {
+    SignUpDefaultValue,
+    SignUpProps,
+    signUpResolver,
+} from '../model/SignUp.model'
 import { useForm } from 'react-hook-form'
 
 export function SignUpService() {
-    const SignUpForm = useForm({
+    const SignUpForm = useForm<SignUpProps>({
         defaultValues: SignUpDefaultValue,
         resolver: signUpResolver,
     })
