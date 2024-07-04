@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import CreatePost from './CreatePost'
+import Posts from './Posts'
 
 const HomePage = () => {
     const [feedType, setFeedType] = useState('forYou')
@@ -7,7 +8,6 @@ const HomePage = () => {
     return (
         <>
             <div className="flex-[4_4_0] mr-auto border-r border-gray-700 min-h-screen">
-
                 <div className="flex w-full border-b border-gray-700">
                     <div
                         className={
@@ -31,11 +31,10 @@ const HomePage = () => {
                     </div>
                 </div>
 
-
                 <CreatePost />
 
                 {/* POSTS */}
-                {/* <Posts feedType={feedType} /> */}
+                <Posts />
             </div>
         </>
     )
