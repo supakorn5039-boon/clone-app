@@ -6,15 +6,15 @@ export const signup = async (req, res) => {
         const { fullName, username, email, password } = req.body
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^s@]+$/
-        if (!emailRegex.test(email)) return res.status(400).json({ error: "Invalid email format" });
+        if (!emailRegex.test(email)) return res.status(400).json({ error: "Invalid email format", status: 400 });
 
         const existingUser = await User.findOne({ username })
-        if (existingUser) return res.status(400).json({ error: "Username is already taken" });
+        if (existingUser) return res.status(400).json({ error: "Username is already taken", status: 400 });
 
         const existingEmail = await User.findOne({ email })
-        if (existingEmail) return res.status(400).json({ error: "Email is already taken" });
+        if (existingEmail) return res.status(400).json({ error: "Email is already taken", status: 400 });
 
-        if (password.length < 6) return res.status(400).json({ error: "Password must be at least 6 characters long" });
+        if (password.length < 6) return res.status(400).json({ error: "Password must be at least 6 characters long", status: 400 });
 
         // Hash Password
         const salt = await bcrypt.genSalt(10);
@@ -30,7 +30,8 @@ export const signup = async (req, res) => {
         if (newUser) {
             generateTokenAndSetCookie(newUser._id, res)
             await newUser.save()
-            res.status(201).json({
+            res.status(200).json({
+                status: 200,
                 _id: newUser._id,
                 fullName: newUser.fullName,
                 username: newUser.username,
@@ -56,7 +57,7 @@ export const login = async (req, res) => {
         const user = await User.findOne({ username })
         const isPasswordCorrect = await bcrypt.compare(password, user.password || "")
 
-        if (!username || !isPasswordCorrect) return res.status(400).json({ error: "invalid username or password" });
+        if (!user || !isPasswordCorrect) return res.status(400).json({ error: "invalid username or password" });
 
         generateTokenAndSetCookie(user._id, res)
 
