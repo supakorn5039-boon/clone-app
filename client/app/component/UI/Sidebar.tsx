@@ -1,17 +1,25 @@
 import XSvg from '../svgs/X'
-
 import { MdHomeFilled } from 'react-icons/md'
 import { IoNotifications } from 'react-icons/io5'
 import { FaUser } from 'react-icons/fa'
 import { BiLogOut } from 'react-icons/bi'
 import Link from 'next/link'
+import { LogOutService } from 'service/Logout.service'
+import LoadingSpinner from '../skeletons/LoadingSpinner'
+import { GetMeService } from 'service/GetMe.service'
 
 const Sidebar = () => {
-    const data = {
-        fullName: 'John Doe',
-        username: 'johndoe',
-        profileImg: '/avatars/boy1.png',
+    const { Logout } = LogOutService()
+    const { data, isLoading } = GetMeService()
+    if (isLoading) {
+        return (
+            <div className="h-screen flex justify-center items-center">
+                <LoadingSpinner size="lg" />
+            </div>
+        )
     }
+
+    if (!data) throw new Error("Can't Fetch")
 
     return (
         <div className="md:flex-[2_2_0] w-18 max-w-52">
@@ -42,10 +50,9 @@ const Sidebar = () => {
                             </span>
                         </Link>
                     </li>
-
                     <li className="flex justify-center md:justify-start">
                         <Link
-                            href={`/profile/${data?.username}`}
+                            href={`/profile/${data.username}`}
                             className="flex gap-3 items-center hover:bg-stone-900 transition-all rounded-full duration-300 py-2 pl-2 pr-4 max-w-fit cursor-pointer"
                         >
                             <FaUser className="w-6 h-6" />
@@ -64,7 +71,7 @@ const Sidebar = () => {
                             <div className="w-8 rounded-full">
                                 <img
                                     src={
-                                        data?.profileImg ||
+                                        data.profileImg ||
                                         '/avatar-placeholder.png'
                                     }
                                 />
@@ -73,13 +80,18 @@ const Sidebar = () => {
                         <div className="flex justify-between flex-1">
                             <div className="hidden md:block">
                                 <p className="text-white font-bold text-sm w-20 truncate">
-                                    {data?.fullName}
+                                    {data.fullName}
                                 </p>
                                 <p className="text-slate-500 text-sm">
-                                    @{data?.username}
+                                    @{data.username}
                                 </p>
                             </div>
-                            <BiLogOut className="w-5 h-5 cursor-pointer" />
+                            <div
+                                className="mt-auto mb-10 flex gap-2 items-start transition-all duration-300 hover:bg-[#181818] py-2 px-4 rounded-full"
+                                onClick={() => Logout()}
+                            >
+                                <BiLogOut className="w-5 h-5 cursor-pointer" />
+                            </div>
                         </div>
                     </Link>
                 )}
@@ -87,4 +99,5 @@ const Sidebar = () => {
         </div>
     )
 }
+
 export default Sidebar

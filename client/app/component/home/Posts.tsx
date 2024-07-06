@@ -1,27 +1,27 @@
 import Post from './Post'
 import PostSkeleton from '../skeletons/PostSkeleton'
 import { POSTS } from 'utils/db/dummy'
+import { PostService } from 'service/Post.service'
 
-const Posts = () => {
-    const isLoading = false
-
+const Posts = ({ feedType }: any) => {
+    const { Postdata, PostLoading } = PostService()
     return (
         <>
-            {isLoading && (
+            {PostLoading && (
                 <div className="flex flex-col justify-center">
                     <PostSkeleton />
                     <PostSkeleton />
                     <PostSkeleton />
                 </div>
             )}
-            {!isLoading && POSTS?.length === 0 && (
+            {!PostLoading && Postdata?.length === 0 && (
                 <p className="text-center my-4">
                     No posts in this tab. Switch 👻
                 </p>
             )}
-            {!isLoading && POSTS && (
+            {!PostLoading && Postdata && (
                 <div>
-                    {POSTS.map((post) => (
+                    {Postdata.map((post) => (
                         <Post key={post._id} post={post} />
                     ))}
                 </div>

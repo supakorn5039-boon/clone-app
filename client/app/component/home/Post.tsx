@@ -5,12 +5,14 @@ import { FaRegBookmark } from 'react-icons/fa'
 import { FaTrash } from 'react-icons/fa'
 import { useState } from 'react'
 import Link from 'next/link'
+import { Comments, Users } from 'model/Posts.model'
 
 type Props = {
     post?: any
 }
 
 const Post = ({ post }: Props) => {
+    console.log(post)
     const [comment, setComment] = useState('')
     const postOwner = post.user
 
@@ -91,44 +93,51 @@ const Post = ({ post }: Props) => {
                                         COMMENTS
                                     </h3>
                                     <div className="flex flex-col gap-3 max-h-60 overflow-auto">
-                                        {post.comments?.map((comment: any) => (
-                                            <div
-                                                key={comment._id}
-                                                className="flex gap-2 items-start"
-                                            >
-                                                <div className="avatar">
-                                                    <div className="w-8 rounded-full">
-                                                        <img
+                                        {post.comments?.map(
+                                            (comment: Comments) => {
+                                                console.log(comment.user)
+                                                return (
+                                                    <div
+                                                        key={comment._id}
+                                                        className="flex gap-2 items-start"
+                                                    >
+                                                        <div className="avatar">
+                                                            <div className="w-8 rounded-full">
+                                                                {/* <img
                                                             src={
                                                                 comment.user
                                                                     .profileImg ||
                                                                 '/avatar-placeholder.png'
                                                             }
-                                                        />
+                                                        /> */}
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex flex-col">
+                                                            <div className="flex items-center gap-1">
+                                                                <span className="font-bold">
+                                                                    {/* {
+                                                                        comment
+                                                                            .user
+                                                                            .fullName
+                                                                    } */}
+                                                                </span>
+                                                                <span className="text-gray-700 text-sm">
+                                                                    @
+                                                                    {/* {
+                                                                        comment
+                                                                            .user
+                                                                            .username
+                                                                    } */}
+                                                                </span>
+                                                            </div>
+                                                            <div className="text-sm">
+                                                                {comment.text}
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className="flex flex-col">
-                                                    <div className="flex items-center gap-1">
-                                                        <span className="font-bold">
-                                                            {
-                                                                comment.user
-                                                                    .fullName
-                                                            }
-                                                        </span>
-                                                        <span className="text-gray-700 text-sm">
-                                                            @
-                                                            {
-                                                                comment.user
-                                                                    .username
-                                                            }
-                                                        </span>
-                                                    </div>
-                                                    <div className="text-sm">
-                                                        {comment.text}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
+                                                )
+                                            }
+                                        )}
                                     </div>
                                     <form className="flex gap-2 items-center mt-4 border-t border-gray-600 pt-2">
                                         <textarea

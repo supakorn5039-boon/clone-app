@@ -4,19 +4,18 @@ import { MdPassword } from 'react-icons/md'
 import Link from 'next/link'
 import XSvg from '../svgs/X'
 import { LoginService } from 'service/Login.service'
-import ToastAlert from '../toast/ToastAlert'
+
 import { SubmitHandler } from 'react-hook-form'
 import { LoginProps } from 'model/Login.model'
+import LoadingSpinner from '../skeletons/LoadingSpinner'
 
 const LoginIndex = () => {
-    const { LoginForm } = LoginService()
-    const onSubmit: SubmitHandler<LoginProps> = async (data) => {
-        await new Promise((resolve) => setTimeout(resolve, 1000))
-        ToastAlert('success', 'Login Successfull')
-        LoginForm.reset()
-        console.log(data)
+    const { LoginForm, Login, isPending } = LoginService()
+    const onSubmit: SubmitHandler<LoginProps> = async () => {
+        Login()
     }
 
+    if (isPending) <LoadingSpinner />
     return (
         <div className="max-w-screen-xl mx-auto flex h-screen">
             <div className="flex-1 hidden lg:flex items-center  justify-center">

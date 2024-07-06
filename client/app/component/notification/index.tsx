@@ -6,7 +6,6 @@ import { FaHeart } from 'react-icons/fa6'
 import Link from 'next/link'
 
 const NotificationIndex = () => {
-    const isLoading = false
     const notifications = [
         {
             _id: '1',
@@ -53,11 +52,7 @@ const NotificationIndex = () => {
                         </ul>
                     </div>
                 </div>
-                {isLoading && (
-                    <div className="flex justify-center h-full items-center">
-                        <LoadingSpinner size="lg" />
-                    </div>
-                )}
+
                 {notifications?.length === 0 && (
                     <div className="text-center p-4 font-bold">
                         No notifications 🤔

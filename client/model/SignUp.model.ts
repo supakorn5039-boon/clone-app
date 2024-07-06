@@ -4,13 +4,17 @@ import type { Resolver } from 'react-hook-form'
 
 // Yup schema definition
 const SignUpSchema = yup.object({
-    email: yup.string().email().required(),
-    username: yup.string().required(),
-    fullName: yup.string().required(),
+    email: yup
+        .string()
+        .email('Invalid email format')
+        .matches(/\.com$/, 'Email must end with .com')
+        .required('Email is required'),
+    username: yup.string().required('Username is required'),
+    fullName: yup.string().required('Full Name is required'),
     password: yup
         .string()
         .min(8, 'Password must be at least 8 characters long')
-        .required(),
+        .required('Password is required'),
 })
 
 export type SignUpProps = yup.InferType<typeof SignUpSchema>
